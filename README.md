@@ -20,3 +20,5 @@ copy private_access_code.js.sample to private_access_code.js and paste your code
 
 - cleanup code
 - sorting (using cached results?)
+
+![](screenshot.png)

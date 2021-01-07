@@ -131,8 +131,14 @@
     }</style>
   </head>
   <body>
-    <h2>Who is using this library?</h2>
     <div id="demo">
+      <div style="margin:5px;">
+        <h1>G'it depends</h1>
+
+        <p><i>Find projects depending on libraries matching your search string.</i></p>
+      </div>
+
+      <div style="margin:5px;">
       Language:
       <select id="language">
         <option value="javascript">JavaScript</option>
@@ -142,15 +148,19 @@
         <option value="rust">Rust</option>
         <option value="crystal">Crystal</option>
       </select>
-      Query:
-      <input type="text" id="query" placeholder="Title..." />
-      <input type="submit" id="search" value="Search" />
+      Search in <span style="width:200px;" id="packageFile">...</span>
+      </div>
+      <div style="margin:5px;">
+        Search for:
+        <input type="text" id="query" placeholder="e.g. octokit" />
+        <input type="submit" id="search" value="Search" />
+      </div>
 
       <p align="right">Total result: <code id="total">0</code></p>
       <ul id="repositories"></ul>
       <p align="center"><a href="#" id="more">More</a></p>
     </div>
-    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="private_access_code.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </body>

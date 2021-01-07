@@ -1,5 +1,26 @@
 $(function() {
-  console.log(github_personal_access_code);
+
+  // Get the input field
+  var input = document.getElementById("query");
+
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keyup", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      document.getElementById("search").click();
+    }
+  });
+
+  let packagefile= getPackageFile($('#language').val());
+  $("#packageFile").html(packagefile);
+
+  $('#language').change(function(){
+    let packagefile= getPackageFile($('#language').val());
+    $("#packageFile").html(packagefile);
+  });
 
   $('#search').click(function(){
     $('#repositories').html('');
@@ -33,8 +54,8 @@ function get_repo(url){
   }).fail(function(){
   });
 }
-function in_code(language, query, sort, order, page) {
 
+function getPackageFile(language){
   let pFiles={}
 
   pFiles.crystal = 'shard.yml'
@@ -44,7 +65,12 @@ function in_code(language, query, sort, order, page) {
   pFiles.rust = 'Cargo.toml'
   pFiles.python = 'requirements.txt'
 
-  packagefile=pFiles[language];
+  return pFiles[language];
+
+}
+function in_code(language, query, sort, order, page) {
+
+  packagefile= getPackageFile(language);
 
   if(language==="ruby"){
     query = "gem "+query;
@@ -75,7 +101,6 @@ function in_code(language, query, sort, order, page) {
         if (repo.description != '' && repo.description != null && repo.description != undefined) {
           description = strip_tags(repo.description);
         }
-        console.log(repo);
 
         html += '<li>';
         html += ' <a target="_BLANK" href="' + repo.html_url + '">' + repo.full_name + '</a>';
