@@ -3,6 +3,23 @@ $(function() {
   // Get the input field
   var input = document.getElementById("query");
 
+  if(typeof github_personal_access_code === 'undefined'){
+    let html = '';
+    html += ' <div style="padding:10px;background-color:#f1f1f1; font-size:80%;">';
+    html += ' You need a <a href="https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token">github personal access token</a>. No need for extra permissions, just a code..';
+    html += ' Enter your code below or ';
+    html += ' <a href="https://github.com/mipmip/g.it-depends#install">Install this';
+    html += ' repository on your local computer</a>.';
+    html += ' It\'s safe. Don\'t worry';
+    html += ' <br/>';
+    html += ' <br/>';
+    html += ' <input type="text" placeholder="Github PAT" id="pat" />';
+    html += ' </div>';
+    html += ' <br/>';
+    $('#tmppatplace').append(html);
+    console.log('you need an access token')
+  }
+
   // Execute a function when the user releases a key on the keyboard
   input.addEventListener("keyup", function(event) {
     // Number 13 is the "Enter" key on the keyboard
@@ -24,6 +41,7 @@ $(function() {
 
   $('#search').click(function(){
     $('#repositories').html('');
+
     in_code(
       $('#language').val(),
       $('#query').val(),
@@ -36,12 +54,15 @@ $(function() {
 });
 
 function readAccesCode(){
-
+  if(typeof github_personal_access_code === 'undefined'){
+    return $('#pat').val();
+  }
+  return github_personal_access_code;
 }
 
 function get_repo(url){
 
-  url= url+"?access_token="+github_personal_access_code;
+  url= url+"?access_token="+readAccesCode();
 
   $.ajax({
     url: url,
@@ -81,7 +102,7 @@ function in_code(language, query, sort, order, page) {
 
   const queryString = 'q=' + encodeURIComponent(query+' filename:'+packagefile);
 
-  var url = 'https://api.github.com/search/code?' + queryString + '&page=' + page + "&access_token="+github_personal_access_code;
+  var url = 'https://api.github.com/search/code?' + queryString + '&page=' + page + "&access_token="+readAccesCode();
   $('#debug').html(url);
 
   $.ajax({
